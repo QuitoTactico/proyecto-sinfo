@@ -1,0 +1,13 @@
+<!-- Eliminar una entrada de la tabla applicants -->
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h2>Delete Applicant</h2>
+  <p>Are you sure you want to delete "{{ object.first_name }} {{ object.last_name }}"?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirm</button>
+  </form>
+  <a href="{% url 'applicant-list' %}">Cancel</a>
+{% endblock %}

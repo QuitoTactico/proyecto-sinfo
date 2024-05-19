@@ -1,0 +1,17 @@
+<!-- muestra todos los datos contenidos en la tabla applicants -->
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h2>Applicants</h2>
+  <ul>
+    {% for applicant in object_list %}
+      <li>
+        <a href="{% url 'applicant-detail' applicant.pk %}">{{ applicant.first_name }} {{ applicant.last_name }}</a>
+        (<a href="{% url 'applicant-update' applicant.pk %}">Edit</a>)
+        (<a href="{% url 'applicant-delete' applicant.pk %}">Delete</a>)
+      </li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'applicant-create' %}">Add new applicant</a>
+{% endblock %}

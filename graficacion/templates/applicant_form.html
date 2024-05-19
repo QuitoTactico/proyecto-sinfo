@@ -1,0 +1,13 @@
+<!-- crea una nueva entrada -->
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h2>{{ view.object.pk|yesno:"Update Applicant,Create Applicant" }}</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+  </form>
+  <a href="{% url 'applicant-list' %}">Cancel</a>
+{% endblock %}
