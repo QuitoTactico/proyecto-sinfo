@@ -1,5 +1,4 @@
-python manage.py migrate
-# crear modelos
-python manage.py makemigrations graficacion
-python manage.py migrate
+python manage.py inspectdb > graficacion/models.py
+python manage.py makemigrations
+python manage.py migrate --fake-initial
 python manage.py createsuperuser
