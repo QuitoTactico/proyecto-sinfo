@@ -3,11 +3,13 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h2>Gráficas</h2>
-
   <p align="center">
+    <h1 align="center">{{title}}</h1>
+  </p>
+
+  <div style="display: flex; justify-content: center;">
     {{plot_script|safe}}
     {{plot_div|safe}}
-  </p>
+  </div>
 
 {% endblock %}

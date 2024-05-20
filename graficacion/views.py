@@ -38,17 +38,46 @@ class ApplicantDeleteView(DeleteView):
 def home(request):
     return render(request, 'home.html')
 
-def dist_hab(request):
+def plot(request):
     # testing purposes
     #applicant_experiences = ApplicantExperience.objects.all()
 
-    plot_script, plot_div = distribucion_habilidades()
+    plot = request.GET.get('plot', '')
 
-    return render(request, 'dist_hab.html',
+    if plot == 'dist-hab':
+        plot_script, plot_div = distribucion_habilidades()
+        title = "Distribución de Habilidades entre los Aplicantes"
+
+    elif plot == 'exp-prom':
+        plot_script, plot_div = experiencia_promedio_por_campo()
+        title = "Experiencia Promedio por Campo"
+
+    elif plot == 'cant-emp':
+        plot_script, plot_div = cantidad_aplicantes_por_empresa()
+        title = "Cantidad de Aplicantes por Empresa"
+    
+    elif plot == 'dist-cargo':
+        plot_script, plot_div = distribucion_aplicantes_por_cargo()
+        title = "Distribución de Aplicantes por Cargo"
+    
+    elif plot == 'hab-dem':
+        plot_script, plot_div = habilidades_mas_demandadas_por_campo()
+        title = "Habilidades Más Demandadas por Campo de Experiencia"
+   
+    elif plot == 'tend-exp':
+        plot_script, plot_div = tendencias_aplicantes_por_ano_experiencia()
+        title = "Tendencias de Aplicantes por Año de Experiencia"
+    
+    else:
+        #return HttpResponse('Opción de gráfico no válida', status=400)
+        plot_script, plot_div = distribucion_habilidades()
+        title = "Distribución de Habilidades entre los Aplicantes"
+
+    return render(request, 'plot.html',
                   {
                       #'applicant_experiences': applicant_experiences
                       'plot_script': plot_script,
                       'plot_div': plot_div,
-                      
+                      'title': title
                       }
                   )
