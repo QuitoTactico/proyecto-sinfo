@@ -1,0 +1,34 @@
+# abregar bin de postgress al path
+pg_ctl -D "C:\Program Files\PostgreSQL\16\data" start
+psql -U postgres
+CREATE DATABASE sinfo_final;
+CREATE ROLE persona1 CREATEDB LOGIN;
+\q
+psql -U postgres -d sinfo_final -f sinfo_final.dump
+
+# ----------------------------------------------------
+
+# si hay problemas con usar el superusuario, usar este:
+# createdb sinfo_final
+
+# si hay problemas con que no exista el rol <username>, hacer:
+psql -U postgres
+# y crear el rol con permisos de creación de base de datos y login
+CREATE ROLE Esteban CREATEDB LOGIN;
+# tuve que hacerlo para persona1, algo que creó Pablo
+CREATE ROLE persona1 CREATEDB LOGIN;
+
+# si hay problemas con la contraseña, meterse en 
+# C:\Program Files\PostgreSQL\16\data\pg_hba.conf
+# y cambiar la contraseña de la lineas que estén en md5 o scram-sha-256 a trust
+# y reiniciar el server con 
+pg_ctl -D "C:\Program Files\PostgreSQL\16\data" restart
+
+# este se usa es para archivos de volcado binarios
+pg_restore -d sinfo_final sinfo_final.dump
+
+# re-crear la base de datos en 0 en caso de corrupción:
+psql -U postgres
+DROP DATABASE sinfo_final;
+CREATE DATABASE sinfo_final;
+\q
