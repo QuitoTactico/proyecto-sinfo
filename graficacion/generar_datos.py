@@ -2,6 +2,10 @@ import json
 from faker import Faker
 import random
 
+# Esto sólo sirve para generar un JSON, 
+# si quieres poblar la base de datos directamente, ejecuta:
+# python manage.py generar_datos
+
 fake = Faker()
 
 def generate_applicants(num):

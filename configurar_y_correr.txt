@@ -1,3 +1,6 @@
+# --------- para tener la base de datos ---------:
+# ----------- y correr por primera vez ----------:
+
 # descargar postgres
 # abregar bin de postgress al path, el bin es C:\Program Files\PostgreSQL\16\bin
 pg_ctl -D "C:\Program Files\PostgreSQL\16\data" start
@@ -9,6 +12,14 @@ psql -U postgres -d sinfo_final -f sinfo_final.dump
 python manage.py generar_datos
 python manage.py runserver
 
+
+# ----------------- para correr -----------------:
+
+pg_ctl -D "C:\Program Files\PostgreSQL\16\data" start
+python manage.py runserver
+
+
+# ------------------ problemas ------------------:
 
 # si hay algún problema, mirar random-files/iniciarPostgressDB.txt en la sección de problemas comunes
 # o simplemente llámame, jajja
