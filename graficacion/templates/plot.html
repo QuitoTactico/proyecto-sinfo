@@ -1,0 +1,10 @@
+<!-- muestra todos los datos contenidos en la tabla applicants -->
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h2>Gráficas</h2>
+  {% for applicant_experience in applicant_experiences %}
+  <h3>{{applicant_experience.applicant.first_name}}</h3>
+  {% endfor %}
+{% endblock %}

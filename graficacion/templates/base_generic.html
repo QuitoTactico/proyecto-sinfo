@@ -10,8 +10,10 @@
 </head>
 <body>
     <header>
-        <h1><a href="{% url 'applicant-list' %}">My Site</a></h1>
+        <h1><a href="{% url 'home' %}">My Site</a></h1>
     </header>
+    <a href="applicants">Aplicantes</a>
+    <a href="plot">Gráficas</a>
     <main>
         {% block content %}
         {% endblock %}

@@ -28,11 +28,16 @@ from graficacion.views import (
     ApplicantDeleteView
 )
 
+from graficacion import views
+
 # forma como se deben realizar las busquedas:
 # http://127.0.0.1:8000/applicants/
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.home, name='home'),
+    path('home', views.home, name='home'),
+    path('plot', views.plot, name='plot'),
     path('applicants/', ApplicantListView.as_view(), name='applicant-list'),
     path('applicant/<int:pk>/', ApplicantDetailView.as_view(), name='applicant-detail'),
     path('applicant/new/', ApplicantCreateView.as_view(), name='applicant-create'),
