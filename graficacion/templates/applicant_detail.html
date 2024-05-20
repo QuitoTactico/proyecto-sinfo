@@ -3,10 +3,10 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+  <p align="center">
+    <h2>{{ object.first_name }} {{ object.last_name }}</h2>
+  </p>
 
-
-
-  <h2>{{ object.first_name }} {{ object.last_name }}</h2>
   <p>Email: {{ object.email }}</p>
   <p>Phone: {{ object.phone_number }}</p>
   <a href="{% url 'applicant-update' object.pk %}">Edit</a>

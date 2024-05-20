@@ -131,7 +131,7 @@ def cantidad_aplicantes_por_empresa():
     p.y_range.start = 0
     p.yaxis.axis_label = "Número de Aplicantes"
     p.xaxis.axis_label = "Empresas"
-    p.xaxis.major_label_orientation = "vertical" 
+    #p.xaxis.major_label_orientation = "vertical" 
 
     #show(p)
     script, div = components(p)
@@ -218,8 +218,8 @@ def habilidades_mas_demandadas_por_campo():
     p.y_range.start = 0
     p.yaxis.axis_label = "Número de Aplicantes"
     p.xaxis.axis_label = "Campos de Experiencia"
-    from math import pi
-    p.xaxis.major_label_orientation = pi/4
+    #from math import pi
+    #p.xaxis.major_label_orientation = pi/4
 
     p.legend.orientation = "vertical"
     p.legend.location = "top_right"

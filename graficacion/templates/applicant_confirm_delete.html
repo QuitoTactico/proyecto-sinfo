@@ -3,10 +3,10 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+  <p align="center">
+    <h2>Delete Applicant</h2>
+  </p>
 
-
-
-  <h2>Delete Applicant</h2>
   <p>Are you sure you want to delete "{{ object.first_name }} {{ object.last_name }}"?</p>
   <form method="post">
     {% csrf_token %}

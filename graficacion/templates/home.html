@@ -1,7 +1,35 @@
-<!-- muestra todos los datos contenidos en la tabla applicants -->
-
 {% extends "base_generic.html" %}
 
+{% load static %}
+
 {% block content %}
-  <h2>Home</h2>
+    <p align="center">
+        <h2 align="center">Home</h2>
+    </p>
+    <div class="row">
+        <div class="col-lg-6" style="padding-left:10%">
+            <div class="card text-center">
+                <h5 class="card-title" style="margin-top:1%">Gráficas</h5>
+                <img class="mx-auto d-block" src="{% static 'images/plot_example.png' %}" alt="Card image cap" style="height: 100px; width: auto;">
+                <div class="card-body">
+                    <a class="btn btn-primary w-100 my-1" href="{% url 'plot' %}?plot=dist-hab">Habilidades</a>
+                    <a class="btn btn-primary w-100 my-1" href="{% url 'plot' %}?plot=exp-prom">Experiencia por Campo</a>
+                    <a class="btn btn-primary w-100 my-1" href="{% url 'plot' %}?plot=cant-emp">Aplicantes por Empresa</a>
+                    <a class="btn btn-primary w-100 my-1" href="{% url 'plot' %}?plot=dist-cargo">Aplicantes por Cargo</a>
+                    <a class="btn btn-primary w-100 my-1" href="{% url 'plot' %}?plot=hab-dem">Habilidades por Campo de Experiencia</a>
+                    <a class="btn btn-primary w-100 my-1" href="{% url 'plot' %}?plot=tend-exp">Aplicantes por Años de Experiencia</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6" style="padding-right:10%">
+            <div class="card text-center">
+                <h5 class="card-title" style="margin-top:1%">Aplicantes</h5>
+                <img class="mx-auto d-block" src="{% static 'images/user.png' %}" alt="Card image cap" style="height: 100px; width: auto;">
+                <div class="card-body">
+                    <a class="btn btn-primary w-100 my-1" href="{% url 'applicant-list' %}">Lista de aplicantes</a>
+                    <a class="btn btn-primary w-100 my-1" href="{% url 'applicant-create' %}">Nuevo aplicante</a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

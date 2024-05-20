@@ -14,12 +14,12 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'home' %}">
+            <a class="navbar-brand d-flex align-items-center justify-content-center" href="{% url 'home' %}">
                 {% load static %}
-                <img src="{% static 'images/home.png' %}" alt="" width="65"
-        height="24"
-                    class="d-inline-block align-text-top" />
-                Ser en Acción Analytics
+                <img src="{% static 'images/home.png' %}" alt="" width="65" height="24" class="d-inline-block align-text-top">
+                <p style="margin:0;">
+                    &nbsp;&nbsp;&nbsp;Analytics
+                </p>
             </a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -33,7 +33,7 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Gráficas
                         </a>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown1">
+                        <div class="dropdown-menu dropdown-menu-end w-auto" aria-labelledby="navbarDropdown1" style="min-width: 300px;">
                             <a class="nav-link active" aria-current="page" href="{% url 'plot' %}?plot=dist-hab">Habilidades</a>
                             <a class="nav-link active" aria-current="page" href="{% url 'plot' %}?plot=exp-prom">Experiencia por Campo</a>
                             <a class="nav-link active" aria-current="page" href="{% url 'plot' %}?plot=cant-emp">Aplicantes por Empresa</a>
