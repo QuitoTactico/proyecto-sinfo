@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Applicant, ApplicantExperience
+from graficacion.graficas import *
 
 class ApplicantListView(ListView):
     model = Applicant
@@ -37,7 +38,17 @@ class ApplicantDeleteView(DeleteView):
 def home(request):
     return render(request, 'home.html')
 
-def plot(request):
-    applicant_experiences = ApplicantExperience.objects.all()
-    return render(request, 'plot.html',
-                  {'applicant_experiences': applicant_experiences})
+def dist_hab(request):
+    # testing purposes
+    #applicant_experiences = ApplicantExperience.objects.all()
+
+    plot_script, plot_div = distribucion_habilidades()
+
+    return render(request, 'dist_hab.html',
+                  {
+                      #'applicant_experiences': applicant_experiences
+                      'plot_script': plot_script,
+                      'plot_div': plot_div,
+                      
+                      }
+                  )

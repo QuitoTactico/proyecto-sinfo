@@ -37,7 +37,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
     path('home', views.home, name='home'),
-    path('plot', views.plot, name='plot'),
+    path('plot', views.dist_hab, name='plot'),
     path('applicants/', ApplicantListView.as_view(), name='applicant-list'),
     path('applicant/<int:pk>/', ApplicantDetailView.as_view(), name='applicant-detail'),
     path('applicant/new/', ApplicantCreateView.as_view(), name='applicant-create'),

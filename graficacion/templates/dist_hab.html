@@ -4,7 +4,10 @@
 
 {% block content %}
   <h2>Gráficas</h2>
-  {% for applicant_experience in applicant_experiences %}
-  <h3>{{applicant_experience.applicant.first_name}}</h3>
-  {% endfor %}
+
+  <p align="center">
+    {{plot_script|safe}}
+    {{plot_div|safe}}
+  </p>
+
 {% endblock %}
