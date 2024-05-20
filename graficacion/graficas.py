@@ -29,9 +29,12 @@ def distribucion_habilidades():
 
     source = ColumnDataSource(data=data_skills)
 
-    p = figure(x_range=data_skills['skill_name'], height=350,
-    title="Distribución de Habilidades entre los Aplicantes",
-    toolbar_location=None, tools="")
+    p = figure(x_range=data_skills['skill_name'], 
+               height=450,
+               title="Distribución de Habilidades entre los Aplicantes",
+               toolbar_location=None, 
+               tools="",
+               sizing_mode="stretch_width")
 
     p.vbar(x='skill_name', 
            top='num_applicants', 
@@ -75,8 +78,12 @@ def experiencia_promedio_por_campo():
 
     source = ColumnDataSource(data=data_experience)
 
-    p = figure(x_range=data_experience['field_name'], height=350, title="Experiencia Promedio por Campo",
-               toolbar_location=None, tools="")
+    p = figure(x_range=data_experience['field_name'], 
+               height=450, 
+               title="Experiencia Promedio por Campo",
+               toolbar_location=None, 
+               tools="",
+               sizing_mode="stretch_width")
 
     p.vbar(x='field_name', top='avg_experience', width=0.9, source=source, 
            #legend_field="field_name",
@@ -109,8 +116,12 @@ def cantidad_aplicantes_por_empresa():
 
     source = ColumnDataSource(data=data_companies)
 
-    p = figure(x_range=data_companies['company_name'], height=350, title="Cantidad de Aplicantes por Empresa",
-               toolbar_location=None, tools="")
+    p = figure(x_range=data_companies['company_name'], 
+               height=450, 
+               title="Cantidad de Aplicantes por Empresa",
+               toolbar_location=None, 
+               tools="",
+               sizing_mode="stretch_width")
 
     p.vbar(x='company_name', top='num_applicants', width=0.9, source=source,
            line_color='white', fill_color=factor_cmap('company_name',
@@ -138,8 +149,12 @@ def distribucion_aplicantes_por_cargo():
 
     source = ColumnDataSource(data=data_positions)
 
-    p = figure(x_range=data_positions['position_name'], height=350, title="Distribución de Aplicantes por Cargo",
-               toolbar_location=None, tools="")
+    p = figure(x_range=data_positions['position_name'], 
+               height=450, 
+               title="Distribución de Aplicantes por Cargo",
+               toolbar_location=None, 
+               tools="",
+               sizing_mode="stretch_width")
 
     p.vbar(x='position_name', top='num_applicants', width=0.9, source=source,
            line_color='white', fill_color=factor_cmap('position_name', palette=Spectral9, factors=data_positions['position_name']))
@@ -180,13 +195,12 @@ def habilidades_mas_demandadas_por_campo():
 
     source = ColumnDataSource(data=data_field_skills)
 
-    p = figure(
-        x_range=unique_fields,
-        height=350,
-        title="Habilidades Más Demandadas por Campo de Experiencia",
-        toolbar_location=None,
-        tools="",
-    )
+    p = figure(x_range=unique_fields,
+               height=450,
+               title="Habilidades Más Demandadas por Campo de Experiencia",
+               toolbar_location=None,
+               tools="",
+               sizing_mode="stretch_width")
 
     p.vbar(
         x="field_name",
@@ -229,8 +243,12 @@ def tendencias_aplicantes_por_ano_experiencia():
 
     source = ColumnDataSource(data=data_experience_years)
 
-    p = figure(x_range=data_experience_years['years_of_experience'], height=350, title="Tendencias de Aplicantes por Año de Experiencia",
-               toolbar_location=None, tools="")
+    p = figure(x_range=data_experience_years['years_of_experience'], 
+               height=450, 
+               title="Tendencias de Aplicantes por Año de Experiencia",
+               toolbar_location=None, 
+               tools="", 
+               sizing_mode="stretch_width")
 
     p.vbar(x='years_of_experience', top='num_applicants', width=0.9, source=source,
            line_color='white', fill_color=factor_cmap('years_of_experience', palette=Category20b[20], factors=data_experience_years['years_of_experience']))
@@ -265,7 +283,7 @@ def habilidades_mas_demandadas_por_campo2():
 
     source = ColumnDataSource(data=data_field_skills)
 
-    p = figure(x_range=unique_fields, height=350, title="Habilidades Más Demandadas por Campo de Experiencia",
+    p = figure(x_range=unique_fields, height=450, title="Habilidades Más Demandadas por Campo de Experiencia",
                toolbar_location=None, tools="")
 
     p.vbar(x='field_name', top='num_applicants', width=0.9, source=source,
