@@ -3,6 +3,7 @@ from bokeh.transform import factor_cmap
 from bokeh.models import ColumnDataSource, HoverTool
 from bokeh.palettes import Spectral11, Category20b
 from bokeh.embed import components
+from bokeh.transform import dodge
 
 from graficacion.models import *
 from django.db.models import Count, Avg
@@ -148,19 +149,33 @@ def distribucion_aplicantes_por_cargo():
     script, div = components(p)
     return script, div
 
+''' # APILADAS NO SE VE MUY BIEN
 def habilidades_mas_demandadas_por_campo():
     field_skills = ApplicantExperience.objects.values('experience_field__field_name', 'applicant__applicantskill__skill__skill_name').annotate(num_applicants=Count('applicant')).order_by('-num_applicants')
 
-    data_field_skills = {
-        'field_name': [fs['experience_field__field_name'] for fs in field_skills],
-        'skill_name': [fs['applicant__applicantskill__skill__skill_name'] for fs in field_skills],
-        'num_applicants': [fs['num_applicants'] for fs in field_skills]
-    }
+    # Filtrar los valores nulos
+    filtered_field_skills = [fs for fs in field_skills if fs['experience_field__field_name'] is not None and fs['applicant__applicantskill__skill__skill_name'] is not None]
 
-    unique_fields = list(set(data_field_skills['field_name']))
-    unique_skills = list(set(skill for skill in data_field_skills['skill_name'] if skill is not None))
+    # Crear listas separadas para cada campo
+    field_names = [fs['experience_field__field_name'] for fs in filtered_field_skills]
+    skill_names = [fs['applicant__applicantskill__skill__skill_name'] for fs in filtered_field_skills]
+    num_applicants = [fs['num_applicants'] for fs in filtered_field_skills]
 
-    source = ColumnDataSource(data=data_field_skills)
+    unique_fields = list(set(field_names))
+    unique_skills = list(set(skill_names))
+
+    # Crear un nuevo diccionario para el ColumnDataSource con columnas separadas para cada habilidad
+    data = {'field_name': unique_fields}
+    for skill in unique_skills:
+        data[skill] = [0] * len(unique_fields)
+    
+    for i, field in enumerate(field_names):
+        skill = skill_names[i]
+        if skill in data:
+            field_index = unique_fields.index(field)
+            data[skill][field_index] += num_applicants[i]
+
+    source = ColumnDataSource(data=data)
 
     p = figure(x_range=unique_fields,
                height=450,
@@ -169,20 +184,12 @@ def habilidades_mas_demandadas_por_campo():
                tools="",
                sizing_mode="stretch_width")
 
-    p.vbar(
-        x="field_name",
-        top="num_applicants",
-        width=0.9,
-        source=source,
-        legend_field="skill_name",
-        line_color="white",
-        fill_color=factor_cmap(
-            "skill_name", palette=Spectral11, factors=unique_skills
-        ),
-    )
+    # Apilar las barras usando vbar_stack
+    p.vbar_stack(unique_skills, x='field_name', width=0.9, color=Spectral11[:len(unique_skills)],
+                 source=source, legend_label=unique_skills)
 
-    hover = HoverTool(mode='vline')
-    hover.tooltips = [("Habilidad", "@skill_name"), ("Aplicantes", "@num_applicants")]
+    hover = HoverTool()
+    hover.tooltips = [("Campo de Experiencia", "@field_name"), ("Habilidad y # de aplicantes", "@$name @field_name")]
     p.add_tools(hover)
 
     p.xgrid.grid_line_color = None
@@ -197,7 +204,70 @@ def habilidades_mas_demandadas_por_campo():
 
     script, div = components(p)
     return script, div
+'''
 
+def habilidades_mas_demandadas_por_campo():
+    field_skills = ApplicantExperience.objects.values('experience_field__field_name', 'applicant__applicantskill__skill__skill_name').annotate(num_applicants=Count('applicant')).order_by('-num_applicants')
+
+    # Filtrar los valores nulos
+    filtered_field_skills = [fs for fs in field_skills if fs['experience_field__field_name'] is not None and fs['applicant__applicantskill__skill__skill_name'] is not None]
+
+    # Crear listas separadas para cada campo
+    field_names = [fs['experience_field__field_name'] for fs in filtered_field_skills]
+    skill_names = [fs['applicant__applicantskill__skill__skill_name'] for fs in filtered_field_skills]
+    num_applicants = [fs['num_applicants'] for fs in filtered_field_skills]
+
+    unique_fields = list(set(field_names))
+    unique_skills = list(set(skill_names))
+
+    # Crear un nuevo diccionario para el ColumnDataSource con columnas separadas para cada habilidad
+    data = {'field_name': unique_fields}
+    for skill in unique_skills:
+        data[skill] = [0] * len(unique_fields)
+    
+    for i, field in enumerate(field_names):
+        skill = skill_names[i]
+        if skill in data:
+            field_index = unique_fields.index(field)
+            data[skill][field_index] += num_applicants[i]
+
+    source = ColumnDataSource(data=data)
+
+    p = figure(x_range=unique_fields,
+               height=450,
+               title="Habilidades Más Demandadas por Campo de Experiencia",
+               toolbar_location=None,
+               tools="",
+               sizing_mode="stretch_width")
+
+    # Configuración para barras agrupadas
+    colors = Spectral11[:len(unique_skills)]
+    bar_width = 0.08  # Ancho de las barras más angosto
+    offsets = [-0.3 + i * bar_width for i in range(len(unique_skills))]
+
+    for i, (skill, offset) in enumerate(zip(unique_skills, offsets)):
+        p.vbar(x=dodge('field_name', offset, range=p.x_range), 
+               top=skill, width=bar_width, source=source,
+               color=colors[i], legend_label=skill, name=skill)
+
+    hover = HoverTool()
+    hover.tooltips = [("Campo de Experiencia", "@field_name"), ("# de Aplicantes", "@$name")]
+    p.add_tools(hover)
+
+    p.x_range.range_padding = 0.1
+    p.xgrid.grid_line_color = None
+    p.y_range.start = 0
+    p.yaxis.axis_label = "Número de Aplicantes"
+    p.xaxis.axis_label = "Campos de Experiencia"
+
+    p.legend.orientation = "vertical"
+    p.legend.location = "top_right"
+    p.legend.label_text_font_size = "8pt"
+    p.add_layout(p.legend[0], 'right')
+
+    script, div = components(p)
+    return script, div
+    
 def tendencias_aplicantes_por_ano_experiencia():
     experience_years = ApplicantExperience.objects.values('years_of_experience').annotate(num_applicants=Count('applicant')).order_by('years_of_experience')
 
