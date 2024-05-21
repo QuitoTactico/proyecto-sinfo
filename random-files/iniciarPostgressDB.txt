@@ -35,3 +35,14 @@ CREATE DATABASE sinfo_final;
 
 # crear un archivo de volcado
 pg_dump -U postgres sinfo_final > sinfo_final.dump 
+
+# re-crear la base de datos para que permita UTF-8
+psql -U postgres
+DROP DATABASE sinfo_final;
+CREATE DATABASE sinfo_final WITH ENCODING 'UTF8' LC_COLLATE='en_US.utf8' LC_CTYPE='en_US.utf8';
+# o si usas mac
+CREATE DATABASE sinfo_final WITH ENCODING 'UTF8' LC_COLLATE='en_US.UTF-8' LC_CTYPE='en_US.UTF-8';
+\q
+
+# convertir el archivo de volcado en uno aceptable
+iconv -f UTF-8 -t LATIN1//TRANSLIT [input_file] -o [output_file]
