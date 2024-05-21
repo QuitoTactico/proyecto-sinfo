@@ -32,3 +32,6 @@ psql -U postgres
 DROP DATABASE sinfo_final;
 CREATE DATABASE sinfo_final;
 \q
+
+# crear un archivo de volcado
+pg_dump -U postgres sinfo_final > sinfo_final.dump 
