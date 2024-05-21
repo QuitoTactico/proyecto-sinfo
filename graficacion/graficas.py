@@ -181,8 +181,8 @@ def habilidades_mas_demandadas_por_campo():
         ),
     )
 
-    hover = HoverTool()
-    hover.tooltips = [("Campo de Experiencia", "@field_name"), ("Habilidad", "@skill_name"), ("Número de Aplicantes", "@num_applicants")]
+    hover = HoverTool(mode='vline')
+    hover.tooltips = [("Habilidad", "@skill_name"), ("Aplicantes", "@num_applicants")]
     p.add_tools(hover)
 
     p.xgrid.grid_line_color = None
